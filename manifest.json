@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Shorts Blocker",
+  "version": "1.0.0",
+  "description": "Block YouTube Shorts and Instagram Reels with customizable toggle controls",
+  
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.instagram.com/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.instagram.com/*"
+      ],
+      "js": ["content_script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Shorts Blocker Settings"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["blocked.html"],
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.instagram.com/*"
+      ]
+    }
+  ]
+}

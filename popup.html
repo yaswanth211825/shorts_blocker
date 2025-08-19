@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shorts Blocker Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">🚫</div>
+      <h1>Shorts Blocker</h1>
+      <p class="subtitle">Control what content you see</p>
+    </div>
+    
+    <div class="settings">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">YouTube Shorts</div>
+          <div class="setting-description">Block Shorts tab, shelf, and videos</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="youtube-toggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Instagram Reels</div>
+          <div class="setting-description">Block Reels tab, feed, and videos only</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="instagram-reels-toggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Block Instagram Completely</div>
+          <div class="setting-description">Block entire Instagram site</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="instagram-complete-toggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="status" id="status">Settings saved</div>
+      <div class="version">v1.0.0</div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
