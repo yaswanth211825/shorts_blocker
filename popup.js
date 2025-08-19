@@ -1,79 +1,46 @@
-// Popup script for Shorts Blocker extension
-// Handles toggle interactions and settings persistence
+// popup.js - v2.0.0 YouTube Shorts Only
+document.addEventListener('DOMContentLoaded', () => {
+  const youtubeToggle = document.getElementById('youtube-toggle');
+  
+  if (!youtubeToggle) return;
 
-class PopupController {
-  constructor() {
-    this.youtubeToggle = document.getElementById('youtube-toggle');
-    this.instagramReelsToggle = document.getElementById('instagram-reels-toggle');
-    this.instagramCompleteToggle = document.getElementById('instagram-complete-toggle');
-    this.status = document.getElementById('status');
-    
-    this.init();
-  }
+  // Load current settings
+  chrome.runtime.sendMessage({ action: 'getSettings' }, (response) => {
+    if (response) {
+      youtubeToggle.checked = response.blockYouTubeShorts;
+    }
+  });
 
-  async init() {
-    // Load current settings
-    await this.loadSettings();
-    
-    // Add event listeners
-    this.youtubeToggle.addEventListener('change', () => this.handleToggleChange());
-    this.instagramReelsToggle.addEventListener('change', () => this.handleToggleChange());
-    this.instagramCompleteToggle.addEventListener('change', () => this.handleInstagramCompleteToggle());
-  }
-
-  async loadSettings() {
-    return new Promise((resolve) => {
-      chrome.storage.local.get(['blockYouTubeShorts', 'blockInstagramReels', 'blockInstagramCompletely'], (result) => {
-        // Set toggle states based on stored settings
-        this.youtubeToggle.checked = result.blockYouTubeShorts ?? true;
-        this.instagramReelsToggle.checked = result.blockInstagramReels ?? true;
-        this.instagramCompleteToggle.checked = result.blockInstagramCompletely ?? false;
-        resolve();
-      });
+  // Handle toggle changes
+  youtubeToggle.addEventListener('change', saveSettings);
+  
+  // Add click handler to slider for better UX
+  const slider = document.querySelector('.slider');
+  if (slider) {
+    slider.addEventListener('click', () => {
+      youtubeToggle.checked = !youtubeToggle.checked;
+      saveSettings();
     });
   }
 
-  async handleToggleChange() {
+  function saveSettings() {
     const settings = {
-      blockYouTubeShorts: this.youtubeToggle.checked,
-      blockInstagramReels: this.instagramReelsToggle.checked,
-      blockInstagramCompletely: this.instagramCompleteToggle.checked
+      blockYouTubeShorts: youtubeToggle.checked
     };
 
-    // Save settings to storage
     chrome.storage.local.set(settings, () => {
-      this.showStatus('Settings saved');
+      // Visual feedback on save
+      youtubeToggle.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        youtubeToggle.style.transform = 'scale(1)';
+      }, 150);
       
-      // Notify background script about the change
-      chrome.runtime.sendMessage({
-        action: 'updateSettings',
-        settings: settings
+      // Auto-refresh YouTube tabs when settings change
+      chrome.tabs.query({ url: "*://*.youtube.com/*" }, (tabs) => {
+        tabs.forEach(tab => {
+          chrome.tabs.reload(tab.id);
+        });
       });
     });
   }
-
-  async handleInstagramCompleteToggle() {
-    // If complete blocking is enabled, disable reels-only blocking
-    if (this.instagramCompleteToggle.checked) {
-      this.instagramReelsToggle.checked = false;
-      this.showStatus('Complete Instagram blocking enabled');
-    }
-    
-    this.handleToggleChange();
-  }
-
-  showStatus(message) {
-    this.status.textContent = message;
-    this.status.classList.add('show');
-    
-    // Hide status after 2 seconds
-    setTimeout(() => {
-      this.status.classList.remove('show');
-    }, 2000);
-  }
-}
-
-// Initialize popup when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  new PopupController();
 });

@@ -1,36 +1,22 @@
-// Background service worker for Shorts Blocker extension
-// Handles storage initialization and message passing
+// Background service worker for Shorts Blocker extension v2.0.0
+// Handles storage initialization and message passing - YouTube Shorts only
 
 // Initialize default settings when extension is installed
 chrome.runtime.onInstalled.addListener(() => {
-  // Set default blocking states
   chrome.storage.local.set({
-    blockYouTubeShorts: true,
-    blockInstagramReels: true,
-    blockInstagramCompletely: false
+    blockYouTubeShorts: true
   });
 });
 
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'getSettings') {
-    // Return current blocking settings
-    chrome.storage.local.get(['blockYouTubeShorts', 'blockInstagramReels', 'blockInstagramCompletely'], (result) => {
+    chrome.storage.local.get(['blockYouTubeShorts'], (result) => {
       sendResponse({
-        blockYouTubeShorts: result.blockYouTubeShorts ?? true,
-        blockInstagramReels: result.blockInstagramReels ?? true,
-        blockInstagramCompletely: result.blockInstagramCompletely ?? false
+        blockYouTubeShorts: result.blockYouTubeShorts ?? true
       });
     });
     return true; // Keep message channel open for async response
-  }
-  
-  if (request.action === 'updateSettings') {
-    // Update settings in storage
-    chrome.storage.local.set(request.settings, () => {
-      sendResponse({ success: true });
-    });
-    return true;
   }
 });
 
@@ -40,7 +26,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     // Notify all tabs about setting changes
     chrome.tabs.query({}, (tabs) => {
       tabs.forEach(tab => {
-        if (tab.url && (tab.url.includes('youtube.com') || tab.url.includes('instagram.com'))) {
+        if (tab.url && tab.url.includes('youtube.com')) {
           chrome.tabs.sendMessage(tab.id, {
             action: 'settingsChanged',
             changes: changes

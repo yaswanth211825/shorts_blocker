@@ -1,15 +1,15 @@
-# Shorts Blocker Chrome Extension
+# Shorts Blocker Chrome Extension v2.0.0
 
-A Chrome extension that blocks YouTube Shorts and Instagram Reels with customizable toggle controls.
+A simple and effective Chrome extension that blocks YouTube Shorts. Focused, lightweight, and reliable.
 
 ## Features
 
 - **YouTube Shorts Blocking**: Removes Shorts tab from sidebar, Shorts shelf from homepage, and individual Shorts videos
-- **Instagram Reels Blocking**: Removes Reels tab from navigation and Reels from feed
-- **Direct URL Blocking**: Shows a block message and redirects when visiting Shorts/Reels URLs directly
-- **Toggle Controls**: Easy-to-use popup with individual toggles for each platform
+- **Direct URL Blocking**: Shows a block message and redirects when visiting Shorts URLs directly  
+- **Simple Toggle Control**: Easy-to-use popup with a single toggle for YouTube Shorts
 - **Persistent Settings**: Settings are saved using Chrome's storage API
 - **Dynamic Content Handling**: Uses MutationObserver to handle dynamically loaded content
+- **Lightweight**: Focused solely on YouTube Shorts blocking for optimal performance
 
 ## Installation & Testing
 
@@ -28,18 +28,11 @@ A Chrome extension that blocks YouTube Shorts and Instagram Reels with customiza
 2. Look for the "Shorts" tab in the left sidebar - it should be hidden
 3. Check the homepage for any Shorts shelves - they should be removed
 4. Try visiting a direct Shorts URL like: `https://youtube.com/shorts/dQw4w9WgXcQ`
-5. You should see a block message with 5-second countdown
-
-#### Instagram Reels Testing:
-1. Go to `https://instagram.com` (requires login)
-2. Look for the "Reels" tab in navigation - it should be hidden
-3. Check your feed for any Reels content - it should be removed
-4. Try visiting a direct Reels URL like: `https://instagram.com/reels/ABC123`
-5. You should see a block message with 5-second countdown
+5. You should see a block message with 2-second countdown
 
 #### Popup Testing:
 1. Click the extension icon in Chrome's toolbar
-2. Toggle the switches to enable/disable blocking for each platform
+2. Toggle the YouTube Shorts switch to enable/disable blocking
 3. Settings should persist when you close and reopen the popup
 4. Test that toggling off removes the blocking behavior
 

@@ -3,56 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shorts Blocker Settings</title>
+  <title>Shorts Blocker v2.0</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <div class="icon">🚫</div>
-      <h1>Shorts Blocker</h1>
-      <p class="subtitle">Control what content you see</p>
-    </div>
+    <header>
+      <h1>🚫 Shorts Blocker</h1>
+      <p>Block YouTube Shorts - Simple & Effective</p>
+    </header>
     
-    <div class="settings">
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">YouTube Shorts</div>
-          <div class="setting-description">Block Shorts tab, shelf, and videos</div>
+    <main>
+      <div class="toggle-group">
+        <div class="toggle-item">
+          <label for="youtube-toggle">
+            <span class="platform-icon">📺</span>
+            <span class="platform-name">YouTube Shorts</span>
+          </label>
+          <div class="toggle-switch">
+            <input type="checkbox" id="youtube-toggle" checked>
+            <span class="slider"></span>
+          </div>
         </div>
-        <label class="toggle">
-          <input type="checkbox" id="youtube-toggle" checked>
-          <span class="slider"></span>
-        </label>
       </div>
-      
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Instagram Reels</div>
-          <div class="setting-description">Block Reels tab, feed, and videos only</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="instagram-reels-toggle" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      
-      <div class="setting-item">
-        <div class="setting-info">
-          <div class="setting-title">Block Instagram Completely</div>
-          <div class="setting-description">Block entire Instagram site</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="instagram-complete-toggle">
-          <span class="slider"></span>
-        </label>
-      </div>
-    </div>
+    </main>
     
-    <div class="footer">
-      <div class="status" id="status">Settings saved</div>
-      <div class="version">v1.0.0</div>
-    </div>
+    <footer>
+      <p>v2.0.0 - Settings saved automatically</p>
+    </footer>
   </div>
   
   <script src="popup.js"></script>
